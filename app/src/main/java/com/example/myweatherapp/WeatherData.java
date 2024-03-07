@@ -43,9 +43,9 @@ public class WeatherData {
     private static String updateWeatherIcon(int weatherId) {
         if (weatherId >= 0 && weatherId < 300) {
             return "thunderstorm";
-        } else if (weatherId >= 300 && weatherId < 500) {
+        } else if (weatherId >= 300 && weatherId <= 501) {
             return "rainy";
-        } else if (weatherId >= 500 && weatherId < 600) {
+        } else if (weatherId > 501 && weatherId < 600) {
             return "heavyrain";
         } else if (weatherId >= 600 && weatherId <= 700) {
             return "snowy";

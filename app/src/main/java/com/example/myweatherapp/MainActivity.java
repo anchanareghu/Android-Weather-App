@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
         } else if (timeOfDay < 16) {
             relativeLayout.setBackgroundResource(R.drawable.fog);
         } else if (timeOfDay < 21) {
-            relativeLayout.setBackgroundResource(R.drawable.night);
+            relativeLayout.setBackgroundResource(R.drawable.fog);
         } else {
             relativeLayout.setBackgroundResource(R.drawable.night);
 
