@@ -1,6 +1,6 @@
 
 # Android Weather App
-Welcome to the Android Weather App repository! This app provides users with real-time weather updates for their current location and allows them to search for weather information in any city worldwide. Powered by the OpenWeatherMap API, the app fetches weather data asynchronously using the android-async-http library.
+This app provides users with real-time weather updates for their current location and allows them to search for weather information in any city worldwide. Powered by the  [OpenWeatherMap](https://openweathermap.org/) API, the app fetches weather data asynchronously using the android-async-http library.
 
 ## Features
 1. **Current Location Weather**: Upon launching the app, users receive immediate weather updates for their current location.
@@ -12,7 +12,7 @@ Welcome to the Android Weather App repository! This app provides users with real
 
 ```
 
-implementation("com.loopj.android:android-async-http:1.4.11")
+implementation ("com.loopj.android:android-async-http:1.4.11")
 
 ```
 
