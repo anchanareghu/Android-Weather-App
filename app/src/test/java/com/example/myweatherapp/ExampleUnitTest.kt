@@ -1,15 +1,24 @@
 package com.example.myweatherapp
 
-import org.junit.Test
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.myweatherapp.domain.location.LocationTracker
+import com.example.myweatherapp.domain.repository.WeatherRepository
+import com.example.myweatherapp.domain.util.Resource
+import com.example.myweatherapp.domain.weather.WeatherData
+import com.example.myweatherapp.domain.weather.WeatherInfo
+import com.example.myweatherapp.domain.weather.WeatherType
+import com.example.myweatherapp.presentation.WeatherViewModel
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import org.junit.*
+import org.junit.rules.RuleChain
+import org.junit.rules.TestRule
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class ExampleUnitTest{
+    @get:Rule
+    val rule: TestRule = InstantTaskExecutorRule()
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
