@@ -16,11 +16,9 @@ import javax.inject.Singleton
 //.baseUrl("https://api.openweathermap.org/data/2.5/")
 //"https://api.open-meteo.com/"
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
     fun provideWeatherApi(): WeatherApi {

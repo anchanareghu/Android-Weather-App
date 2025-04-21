@@ -84,6 +84,7 @@ dependencies {
 
     // Location Services
     implementation("com.google.android.gms:play-services-location:20.0.0")
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -92,6 +93,13 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
 
+    // Accompanist
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.27.0")
+
+    testImplementation ("org.mockito:mockito-core:4.6.1")
+    testImplementation ("org.mockito:mockito-inline:4.6.1")
+    androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 }
 kapt {
     correctErrorTypes = true

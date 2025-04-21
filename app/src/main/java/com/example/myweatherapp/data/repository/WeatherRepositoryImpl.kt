@@ -10,34 +10,16 @@ import com.example.myweatherapp.domain.weather.WeatherInfo
 import com.example.myweatherapp.domain.repository.WeatherRepository
 import javax.inject.Inject
 
-//class WeatherRepositoryImpl @Inject constructor(
-//    private val api: WeatherApi
-//) : WeatherRepository {
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override suspend fun getWeather(lat: Double, lon: Double): Resource<WeatherInfo> {
-//        return try {
-//            val response = api.getWeather(latitude = lat, longitude = lon)
-//            Log.d("WeatherRepository", "API response: $response")
-//            Resource.Success(
-//                data = response.toWeatherInfo()
-//            )
-//        } catch (e: Exception) {
-//            Log.e("WeatherRepository", "API call failed: ${e.message}")
-//            Resource.Error(e.message ?: "An unknown error occurred.")
-//        }
-//    }
-//}
 class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi
 ) : WeatherRepository {
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeather(lat: Double, lon: Double): Resource<WeatherInfo> {
         return try {
-            val apiKey = "aa8a4b6bda9d86fd0e2ca3847276fbb4"
             Resource.Success(
                 data = api.getWeather(
                     latitude = lat,
-                    longitude = lon,
+                    longitude = lon
                 ).toWeatherInfo()
             )
         } catch (e: Exception) {

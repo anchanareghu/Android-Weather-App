@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 requestLocationAndLoadWeather()
             } else {
-                Toast.makeText(this@MainActivity, "Permissions denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -59,6 +60,24 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
+
+        setContent {
+            WeatherApplicationTheme {
+                WeatherMain(
+                    location = weatherViewModel.cityName,
+                    state = weatherViewModel.state,
+                    onRefresh = {
+                        requestLocationAndLoadWeather()
+                    }
+                )
+                if (weatherViewModel.state.isLoading) {
+                    ProgressIndicator()
+                }
+                weatherViewModel.state.error?.let { error ->
+                    ErrorMessage(error)
+                }
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -69,57 +88,26 @@ class MainActivity : ComponentActivity() {
                 application = application
             ).getCurrentLocation()
 
-            val currentLocation = location?.latitude.toString() + ", " + location?.longitude.toString()
-            val city = latLongToCity(location?.latitude!!, location.longitude)
-
             withContext(Dispatchers.Main) {
-                weatherViewModel.loadWeatherInfo()
-                setContent {
-                    WeatherApplicationTheme {
-                        WeatherMain(
-                            location = city,
-                            state = weatherViewModel.state,
-                        )
-                        if (weatherViewModel.state.isLoading) {
-                            LoadingIndicator()
-                        }
-                        weatherViewModel.state.error?.let { error ->
-                            ErrorMessage(error)
-                        }
-                    }
+                if (location != null) {
+                    weatherViewModel.loadWeatherInfo(location)
+                    weatherViewModel.cityName = latLongToCity(
+                        latitude = location.latitude,
+                        longitude = location.longitude
+                    )
+                } else {
+                    weatherViewModel.state = weatherViewModel.state.copy(
+                        isLoading = false,
+                        error = "Couldn't retrieve location. Make sure to grant permission and enable GPS."
+                    )
                 }
             }
         }
     }
 
     private fun latLongToCity(latitude: Double, longitude: Double): String {
-        val geocoder = Geocoder(this, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-        return addresses?.get(0)?.locality ?: "Unknown Location"
-    }
-
-    @Composable
-    private fun LoadingIndicator() {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }
-
-    @Composable
-    private fun ErrorMessage(error: String) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = error,
-                color = Color.Red,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        return Geocoder(this, Locale.getDefault()).getFromLocation(latitude, longitude, 1)
+            ?.firstOrNull()
+            ?.locality ?: "Unknown City"
     }
 }

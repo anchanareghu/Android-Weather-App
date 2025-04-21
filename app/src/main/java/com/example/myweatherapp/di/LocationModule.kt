@@ -1,4 +1,4 @@
-package com.example.weatherapplication.di
+package com.example.myweatherapp.di
 
 import com.example.myweatherapp.data.location.DefaultLocationTracker
 import com.example.myweatherapp.domain.location.LocationTracker
@@ -11,10 +11,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class LocationModule {
-
     @Binds
     @Singleton
     abstract fun bindLocationService(
         defaultLocationTracker: DefaultLocationTracker
     ): LocationTracker
 }
+
